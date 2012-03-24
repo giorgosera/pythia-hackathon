@@ -1,11 +1,9 @@
-
+{% extends "base.html" %}
 
 {% block content %}
 
 <link href='http://fonts.googleapis.com/css?family=Arvo' rel='stylesheet' type='text/css'>
-<style type="text/css">
-body { background-repeat:repeat-x; background-image:url('/static/imgs/back.jpg');}
-</style>
+
 <style>
 
 
@@ -212,11 +210,11 @@ function click(d, i){
           .data(meta) 
           .enter() 
           .append("circle") 
-          .attr("cx", function(d) { return x(formatDate.parse(d.date)); }) 
+          .attr("cx", function(d) { return d3.svg.line().x(formatDate.parse(d.date)); }) 
           .attr("cy", function(d) {    var date = formatDate.parse(d.date);
                                        for (var i = 0; i<series[0].length; i++) 
           								if (date - series[0][i].date == 0) {
-          									return y(series[0][i].price);
+          									return d3.svg.line().y(series[0][i].price);
           								}
            					      }) 
           .attr("r", 8) 
@@ -228,9 +226,29 @@ function click(d, i){
 }
 
 function clickDot(d, i){
-	console.log("TODO: Render response");
+	CYP.popup.close();
+	//console.log("TODO: Render response");
+	//var tmpl = $("#users-actions-template").tmpl({uid: "aid", mod: "modtemp" , ban : "bantemp", del:"deltemp", edit:"edit1", email:"email1"});
+  	CYP.popup.show("tmpl");	
 }
+</script>
+{% end %}
+
+
+{% block jquery_templates %}
+<script id="users-actions-template" type="text/x-jquery-tmpl">
+		<div class="container clearfix" style=" width:360px;">	
+			<div class="actions">
+		<a uid="${uid}" id="moderator-usr-btn" class="button" style="float:left; position:relative;">${mod}</a> 
+		<a uid="${uid}" id="ban-usr-btn" class="button" style="float:left;  position:relative; left:10px;">${ban}</a> 
+		<a uid="${uid}" id="delete-usr-btn" class="button" style="float:left;  position:relative; left:20px;">${del}</a> 
+		<a uid="${uid}" eid="${edit}" email="${email}" id="edit-usr-btn" class="button" style="float:left;  position:relative; left:30px;">Edit</a>
+
+		<br> <br>	<p>
+				<a class="close-pop-up-btn"style="float:right; position:relative;  cursor: pointer;">Close</a>
+				</p>
+			</div>	
+		</div>
 </script>
 
 {% end %}
-

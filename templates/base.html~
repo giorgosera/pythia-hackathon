@@ -41,6 +41,7 @@ div.btnStyle {margin-left:30%;height:59px;width:410px; }
 	<script src="{{static_url('js/libs/jquery.i18n.js')}}"></script>
 	<script src="{{static_url('js/libs/blurb.min.js')}}"></script>
 	<script src="{{static_url('js/CYP.js')}}"></script>
+
 	<script src="{{static_url('js/libs/d3/d3.v2.js')}}"></script>
 	{% for js in kwargs['js_deps'] %}
 		<script src="{{static_url(js)}}"></script>
