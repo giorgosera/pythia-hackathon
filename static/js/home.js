@@ -1,19 +1,17 @@
 /**
  * @fileOverview This file contains all the JavaScript functionality for the home page.
  * 
- * @author <a href="mailto:hi@alexmic.net"> Alex Michael </a>
+ * @author l </a>
  */
 
 CYP.onPageLoad(function() {
-    
-    
-    
+       
     // =============================== Listeners =============================== //
     
     
     
     $("#btnSearch").live("click", function() {
-        var txt = $(this).attr("txtSearch");
+        var txt = $("#txtSearch").attr("value");
         CYP.post("/keywords/send", {
             keywords: txt
         }, true, function(response) {

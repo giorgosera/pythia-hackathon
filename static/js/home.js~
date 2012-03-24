@@ -5,83 +5,13 @@
  */
 
 CYP.onPageLoad(function() {
-    
-    // =============================== Navigator config code =============================== //
-
-    
-    CYP.navigator.prePageAction(function(qs, params) {
-        $("div.nav a.option").removeClass("selected");
-        $("a[href*='" + qs + "']").addClass("selected");
-    });
-    
-    CYP.navigator.addPageAction("activity", function(params) {
-        CYP.api.getActivity(params, function(response){
-            $("#col-content").html(response.activity);
-        });
-    });
-
-    CYP.navigator.addPageAction("proposals", function(params) {
-        CYP.api.getProposals(params, function(response){
-            $("#col-content").html(response.html);
-        });
-    });
-    
-    CYP.navigator.addPageAction("newswire", function(params) {
-	CYP.api.getNewsWire(params, function(response) {
-            $("#col-content").html(response.newswire);
-	    });
-	});
-    
-    CYP.navigator.addPageAction("articles", function(params) {
-	CYP.api.getArticles(params, function(response) {
-            $("#col-content").html(response.articles);
-	    });
-	});
-    
-	CYP.navigator.addPageAction("notifications", function(params) {
-	    CYP.api.getNotifications(params, function(response) {
-            $("#col-content").html(response.notifications);
-	    });
-
-    });
-
-    CYP.navigator.addPageAction("readings", function(params) {
-        CYP.api.getReadings(params, function(response) {
-            $("#col-content").html(response.readings);
-        });
-    });
-    
-    CYP.navigator.addPageAction("p", function(params) {
-        CYP.api.getParagraphs(params, function(response) {
-            $("#col-content").html(response.html);
-        });
-    });
-
-    CYP.navigator.addPageAction("countries", function(params) {
-        CYP.api.getCountries(params, function(response) {
-            $("#col-content").html(response.countries);
-        });
-    });
-    
-    CYP.navigator.addPageAction("timeline", function(params) {
-        CYP.api.getTimeline(params, function(response) {
-            $("#col-content").html(response.timeline);
-        });
-    });
-    
-    CYP.navigator.addPageAction("dictionary", function(params) {
-        CYP.api.getDictionary(params, function(response) {
-            $("#col-content").html(response.dictionary);
-        });
-    });
-    
-    
+       
     // =============================== Listeners =============================== //
     
     
     
     $("#btnSearch").live("click", function() {
-        var txt = $(this).attr("txtSearch");
+        var txt = $("#txtSearch").attr("value");
         CYP.post("/keywords/send", {
             keywords: txt
         }, true, function(response) {

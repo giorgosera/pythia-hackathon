@@ -840,5 +840,5 @@ if (typeof console === "undefined") {
     };
 }
 
-
+CYP.successNotifier.show("User's email successfully Changed");
 

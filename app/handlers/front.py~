@@ -15,13 +15,14 @@ class FrontPageHandler(base.BaseHandler):
 
 class KeywordHandler(base.BaseHandler):
     def on_post(self):
-	qutation = self.get_argument("id",None)
-	#user = User.objects(id = uid).get()
-	
-	return (feed,) 
+	keywords = self.get_argument("keywords",None)
+	keyword_array = keywords.split(" ")#User.objects(id = uid).get()
+	if keywords=="suzu"
+		keywords = "takkos"
+	return (keywords,) 
 
 
     def on_success(self, feed):
-        self.xhr_response.update({"feed": feed.moderator})  
+        self.xhr_response.update({"feed": feed})  
         self.write(self.xhr_response) 
 
