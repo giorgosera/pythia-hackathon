@@ -16,7 +16,7 @@ class FrontPageHandler(base.BaseHandler):
 
 class KeywordHandler(base.BaseHandler):
     def on_post(self):
-	keywords = self.get_argument("keywords",None)
+	keywords = self.get_argument("txtSearch",None)
 	if not keywords:
 		return ("No Keywords entered",)
 	keyword_array = keywords.split(" ")#User.objects(id = uid).get()
@@ -26,6 +26,9 @@ class KeywordHandler(base.BaseHandler):
 
 
     def on_success(self, feed):	
-	self.base_render("timeline.html", feed = feed)
+	if feed == "theo":
+		self.base_render("theo.html", feed = feed)
+	else:
+		self.base_render("timeline.html", feed = feed)
 	
 

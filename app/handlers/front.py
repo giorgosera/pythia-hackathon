@@ -26,6 +26,9 @@ class KeywordHandler(base.BaseHandler):
 
 
     def on_success(self, feed):	
-	self.base_render("timeline.html", feed = feed)
+	if feed == "theo":
+		self.base_render("theo.html")
+	else:
+		self.base_render("timeline.html", feed = feed)
 	
 
