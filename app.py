@@ -33,7 +33,7 @@ class NotesLib(tornado.web.Application):
         ############################
         
         db_host = config.get(env, "db_host") or "localhost"
-        db_name = config.get(env, "db_name") or "noteslibs" + "_" + env
+        db_name = config.get(env, "db_name") or "noteslib" + "_" + env
         db_user = config.get(env, "db_user")
         db_pass = config.get(env, "db_pass")
 
