@@ -296,6 +296,9 @@ class WelcomeHandler(BaseHandler):
         #else:
         #    self.redirect("/home")
 	self.base_render("welcome.html")
+
+
+ 
 # ============================ HomeHandler ================================ #
 
 

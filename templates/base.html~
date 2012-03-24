@@ -9,7 +9,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
 	<meta name="author" content="Pythia"> 
 	<meta name="description" content="Online Event platform "> 
-	<meta property="og:image" content="http://www.thecyprusproblem.com/static/imgs/logo.png" />
+	<meta property="og:image" content="http://www.petrominpng.com.pg/images/logo_big.png" />
 	<meta name="viewport" content="width=920, initial-scale=auto"> 
 	<meta property="og:type" content="website" />
 	<meta property="og:title" content="Pythia" /> 
@@ -17,13 +17,19 @@
 	<meta property="og:site_name" content="Pythia" />
 	<title>
 		{% block title %}
-			 Pythia 
+			Pythia.com 
 		{% end %}
 	</title>
 
+<style type="text/css">
+body { background-repeat:repeat-x; background-image:url('/static/imgs/back.jpg');}
+div.txtSearchArea {background-repeat:no-repeat; background-image:url('/static/imgs/searchbar.jpg');margin-left:20%;height:59px;width:423px;}
+div.btnStyle {margin-left:30%;height:59px;width:410px;}
+</style>
 
 </head> 
-<body>
+
+<body >
 {% block header %}
 {% end %}
 {% block content %}

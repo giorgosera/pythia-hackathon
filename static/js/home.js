@@ -10,14 +10,14 @@ CYP.onPageLoad(function() {
     
     
     
-    $("#btnSearch").live("click", function() {
+    $("#btnSearch2").live("click", function() {
         var txt = $("#txtSearch").attr("value");
-        CYP.post("/keywords/send", {
+        CYP.post("/timeline", {
             keywords: txt
         }, true, function(response) {
             if (response.s) {
-                //CYP.fn.reloadPage();
- 		CYP.successNotifier.show(response.feed);
+	 	CYP.successNotifier.show(response.feed);
+
             }
         });
     });

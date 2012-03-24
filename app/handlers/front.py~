@@ -11,18 +11,21 @@ class FrontPageHandler(base.BaseHandler):
         #    self.base_render("welcome.html")
         #else:
         #    self.redirect("/home")
-	self.base_render("welcome.html")
+	#self.base_render("welcome.html")
+	self.base_render("intro.html")
 
 class KeywordHandler(base.BaseHandler):
     def on_post(self):
 	keywords = self.get_argument("keywords",None)
+	if not keywords:
+		return ("No Keywords entered",)
 	keyword_array = keywords.split(" ")#User.objects(id = uid).get()
-	if keywords=="suzu"
+	if keywords=="suzu":
 		keywords = "takkos"
 	return (keywords,) 
 
 
-    def on_success(self, feed):
-        self.xhr_response.update({"feed": feed})  
-        self.write(self.xhr_response) 
+    def on_success(self, feed):	
+	self.base_render("timeline.html", feed = feed)
+	
 

@@ -8,5 +8,5 @@ from app.handlers import base,front
 url_patterns = [
     ("/", front.FrontPageHandler),
     ("/home", front.FrontPageHandler),
-    ("/keywords/send", front.KeywordHandler),
+    ("/timeline", front.KeywordHandler),
 ]
