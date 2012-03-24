@@ -51,11 +51,11 @@ class BaseHandler(tornado.web.RequestHandler):
         of the user that are cached throughout the website (id, name, url). If the
         user is not logged in, then None is given to the service pool.
         '''
-        self.services.user = self.current_user
-        self.services.cached_user = self.cached_user
-        self.services.locale = self.locale
-        self.widgets.current_user = self.current_user
-        self.widgets.locale = self.locale
+        #self.services.user = self.current_user
+        #self.services.cached_user = self.cached_user
+        #self.services.locale = self.locale
+        #self.widgets.current_user = self.current_user
+        #self.widgets.locale = self.locale
         self.xhr_response = None
 
     def _(self, text):
@@ -74,9 +74,9 @@ class BaseHandler(tornado.web.RequestHandler):
     def db(self):
         return self.application.db
     
-    @property
-    def log(self):
-        return self.application.log
+    #@property
+    #def log(self):
+    #    return self.application.log
     
     @property
     def deps(self):
@@ -215,7 +215,7 @@ class BaseHandler(tornado.web.RequestHandler):
         except:
             ex = sys.exc_info()[1]
             msg = ex.message.encode("utf-8")
-            self.log.exception(msg)
+            #self.log.exception(msg)
             self._execute_on_error(ex)
         else:
             self._execute_on_success(*result)
@@ -291,12 +291,14 @@ class WelcomeHandler(BaseHandler):
     welcome page.
     '''
     def on_get(self):
-        if not self.current_user:
-            self.base_render("welcome.html")
-        else:
-            self.redirect("/home")
+        #if not self.current_user:
+        #    self.base_render("welcome.html")
+        #else:
+        #    self.redirect("/home")
+	self.base_render("welcome.html")
 
 
+ 
 # ============================ HomeHandler ================================ #
 
 

@@ -3,9 +3,9 @@
 # Author: Giorgos Eracleous #
 #############################
 
-from app.handlers import base
+from app.handlers import base,front
 
 url_patterns = [
-    ("/", base.WelcomeHandler),
-    ("/home", base.HomeHandler),
+    ("/", front.FrontPageHandler),
+    ("/home", front.FrontPageHandler),
 ]

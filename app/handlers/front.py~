@@ -1,0 +1,28 @@
+from app.handlers import base
+from mongoengine.queryset import DoesNotExist
+
+class FrontPageHandler(base.BaseHandler):
+    '''
+    Check user status and either load the home screen or the
+    welcome page.
+    '''
+    def on_get(self):
+        #if not self.current_user:
+        #    self.base_render("welcome.html")
+        #else:
+        #    self.redirect("/home")
+	self.base_render("welcome.html")
+
+
+    def on_post(self):
+	p = self.get_argument("id",None)
+	user = User.objects(id = uid).get()
+	self.log.debug("found the user")
+	user.toggle_moderator()
+	return (user,) 
+
+
+    def on_success(self, user):
+        self.xhr_response.update({"moderator": user.moderator})  
+        self.write(self.xhr_response) 
+
