@@ -24,8 +24,15 @@
 
 </head> 
 <body>
-
+{% block header %}
+{% end %}
 {% block content %}
 {% end %}
+	<script src="{{static_url('js/libs/jquery.i18n.js')}}"></script>
+	<script src="{{static_url('js/libs/blurb.min.js')}}"></script>
+	<script src="{{static_url('js/CYP.js')}}"></script>
+	{% for js in kwargs['js_deps'] %}
+		<script src="{{static_url(js)}}"></script>
+	{% end %}
 </body> 
 </html>

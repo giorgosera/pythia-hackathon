@@ -13,15 +13,15 @@ class FrontPageHandler(base.BaseHandler):
         #    self.redirect("/home")
 	self.base_render("welcome.html")
 
-
+class KeywordHandler(base.BaseHandler):
     def on_post(self):
-	qutation = self.get_argument("id",None)
+	keywords = self.get_argument("keywords",None)
 	#user = User.objects(id = uid).get()
 	
-	return (feed,) 
+	return (keywords,) 
 
 
     def on_success(self, feed):
-        self.xhr_response.update({"feed": feed.moderator})  
+        self.xhr_response.update({"feed": kewords})  
         self.write(self.xhr_response) 
 
