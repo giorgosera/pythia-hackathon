@@ -1,8 +1,14 @@
-{% extends "base.html" %}
+
+
 {% block content %}
 
 <link href='http://fonts.googleapis.com/css?family=Arvo' rel='stylesheet' type='text/css'>
+<style type="text/css">
+body { background-repeat:repeat-x; background-image:url('/static/imgs/back.jpg');}
+</style>
 <style>
+
+
 
 svg {
   font: 10px sans-serif;
@@ -206,11 +212,11 @@ function click(d, i){
           .data(meta) 
           .enter() 
           .append("circle") 
-          .attr("cx", function(d) { return d3.svg.line().x(formatDate.parse(d.date)); }) 
+          .attr("cx", function(d) { return x(formatDate.parse(d.date)); }) 
           .attr("cy", function(d) {    var date = formatDate.parse(d.date);
                                        for (var i = 0; i<series[0].length; i++) 
           								if (date - series[0][i].date == 0) {
-          									return d3.svg.line().y(series[0][i].price);
+          									return y(series[0][i].price);
           								}
            					      }) 
           .attr("r", 8) 
