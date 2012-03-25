@@ -80,7 +80,7 @@ path {
 <script src="{{static_url('js/libs/d3/d3.v2.js')}}"></script>
 <script>
 var formatDate = d3.time.format('%Y-%m-%d %H:%M:%S');
-var items = {{kwargs["feed"]}}
+var items = {% raw kwargs["feed"] %}
 
 var meta = items.meta
 var series = []
@@ -272,12 +272,13 @@ function isEmpty(obj) {
     return true;
 }
 
+
 function clickDot(d, i){
 	//console.log(d.keywords);
-	console.log(d.authors);
+	//console.log(d.topTweets);
 	//console.log(d.namedEntities);
 	//console.log(d.locations);
-	//var keyw= d.keywords.split(",");
+
 	if (isEmpty(d.locations)){
 		loca = " ";
 	}
@@ -291,6 +292,16 @@ function clickDot(d, i){
 	else{
 	ent = d.namedEntities[0][0];
 	}
+
+	if (typeof d.keywords[5][0] == "undefined")
+	{
+            key1= " ";
+	}
+    	else{
+    	    key1= d.keywords[5][0];
+    	}	
+
+
 
 
 	var tmpl = $("#users-actions-edit-template").tmpl({	keyword1: d.keywords[0][0],
@@ -311,7 +322,11 @@ function clickDot(d, i){
 								keywordNUM7: d.keywords[6][1],
 								keywordNUM8: d.keywords[7][1],
 								keywordNUM9: d.keywords[8][1],
-												 
+								summary1: d.topTweets[0],
+								summary2: d.topTweets[1],
+								summary3: d.topTweets[2],
+								summary4: d.topTweets[3],
+								summary5: d.topTweets[4],			 
 								authors:d.authors, 
 
 								namedEntities:ent, 
@@ -344,32 +359,28 @@ $('#close-btn').live("click", function(){popup.close();});
 <div>
 <div class="HEADER" style="top:60px; left:90px; color:#d4743f" > Top Tweets</div>
 
-    <div id="TopTweets1" class="TopTweetsA" style="top:110px;">
-    &quot;Lorem ipsum dolor sit amet, consectetur adiping
-. <br/> Mauris placerat nibh et lorem suscipit vehicula. &quot;
+    <div id="TopTweets1" class="TopTweetsA" style="top:110px; OVERFLOW-Y:AUTO; width:420px;">
+    &quot; ${summary1}  &quot;
     </div>
 
-    <div id="TopTweets2" class="TopTweetsB" style="top:165px;">
-    &quot;Sed et leo eget mauris cursus viverra. Sed
-pellentesque <br/> neque ut nisl aliquam fermentum. &quot;
-    </div>
-
-
-    <div id="TopTweets3" class="TopTweetsA"  style="position: absolute;top:220px; left:80px;">
-    &quot;Pellentesque habitant morbi tristique senectus et<br/> malesuada fames ac turpis egestas.&quot;
-
+    <div id="TopTweets2" class="TopTweetsB" style="top:165px;OVERFLOW-Y:AUTO; width:420px;">
+    &quot; ${summary2} &quot;
     </div>
 
 
-    <div id="TopTweets4"  class="TopTweetsB" style="top:275px;">
-    &quot;Nulla suscipit bibendum elementum. Donec<br/> nulla
-sapien, auctor egestas viverra laoreet.&quot;
+    <div id="TopTweets3" class="TopTweetsA"  style="position: OVERFLOW-Y:AUTO; width:400px; absolute;top:220px; left:80px;">
+    &quot;${summary3}&quot;
 
     </div>
 
-    <div id="TopTweets5" class="TopTweetsA" style="top:330px;">
-   "Pellentesque vitae urna eros, vel tempus 
-odio.<br/>  Nulla laoreet metus tristique lectus.&quot;
+
+    <div id="TopTweets4"  class="TopTweetsB" style="top:275px;OVERFLOW-Y:AUTO; width:400px;">
+    &quot;${summary4}&quot;
+
+    </div>
+
+    <div id="TopTweets5" class="TopTweetsA" style="top:330px;OVERFLOW-Y:AUTO; width:400px;">
+   &quot;${summary5}&quot;
 
 
     </div>
