@@ -1,17 +1,27 @@
-{% extends "base.html" %}
 
 {% block content %}
-
 <link href='http://fonts.googleapis.com/css?family=Arvo' rel='stylesheet' type='text/css'>
-
-<style>
-
-
-
-svg {
-  font: 10px sans-serif;
+<style src="text/css">
+.popup-blurb {
+background-repeat:no-repeat; background-image:url('/static/imgs/popup.jpg');
+border: 0 px;
+padding: 15px;
+width:940px;
+height:600px;
+overflow:auto;
 }
-
+</style>
+<style>
+body { background-repeat:repeat-x; background-image:url('/static/imgs/back.jpg');}
+svg {
+font: 10px sans-serif;
+width: 80%;
+height:575px;
+position:absolute;
+left: 10%;
+margin: 0 auto;
+background-color:white;
+}
 path {
   fill: none;
 }
@@ -37,7 +47,11 @@ path {
 }
 
 .timeline-column {
-	float: left;
+	float:left;
+	display: block;
+	margin-left:auto;
+	margin-right:auto;
+	background-color: black;
 }
 
 .title {
@@ -50,12 +64,23 @@ path {
 </style>
 
 <body>
+
 <div id="left-col" class="timeline-column"></div>
 <div id="meta-box" class="meta-column"></div>
+</body>
+{% end %}
+
+{% block scripts %}
+
+
+
+<script src="{{static_url('js/libs/jquery-1.7.2.min.js')}}"></script>
+<script src="{{static_url('js/libs/jquery.tmpl.min.js')}}"></script>
+<script src="{{static_url('js/libs/blurb.min.js')}}"></script>
 <script src="{{static_url('js/libs/d3/d3.v2.js')}}"></script>
 <script>
 var formatDate = d3.time.format('%Y-%m-%d %H:%M:%S');
-var items = {{ kwargs['feed']}}
+var items = {{kwargs["feed"]}}
 
 var meta = items.meta
 var series = []
@@ -154,8 +179,6 @@ focus.selectAll(".line")
     .attr("d", area)
     .attr("stroke", function(d, i) {return color(i)})
     .attr("stroke-width", 3)
-    .on("mouseover", mouseover)
-    .on("mouseout", mouseout)
     .on("click", click);
 
 //Appends the x axis
@@ -193,63 +216,238 @@ function brush() {
 }
 
 //-------------------EVENT HANDLERS ---------------//
-function mouseover(d, i){
-	focus.select("path:nth-child("+(i+1)+")").attr("stroke-width", 8);
-}
-
-function mouseout(d, i){
-	focus.select("path:nth-child("+(i+1)+")").attr("stroke-width", 3);
-}
 
 function click(d, i){
-	
 	if (meta){
 		//Appends events to show coords
 		focus.selectAll("circle") 
           .data(meta) 
           .enter() 
           .append("circle") 
-          .attr("cx", function(d) { return d3.svg.line().x(formatDate.parse(d.date)); }) 
+          .attr("cx", function(d) { return x(formatDate.parse(d.date)); }) 
           .attr("cy", function(d) {    var date = formatDate.parse(d.date);
                                        for (var i = 0; i<series[0].length; i++) 
           								if (date - series[0][i].date == 0) {
-          									return d3.svg.line().y(series[0][i].price);
+          									return y(series[0][i].price);
           								}
            					      }) 
           .attr("r", 8) 
           .attr("opacity", 1) 
           .attr("fill", d3.rgb(0, 0, 0))
           .on("click", clickDot)
-          .append("svg:title").text(function(d) {return "Date: " + d.date + "\nTitle: " + d.price;})
+          .on("mouseover", mouseoverDot)
+          .on("mouseout", mouseoutDot)
+          .append("svg:title").text(function(d) {return "Date: " + d.date + 
+          												"\nTitle: " + d.title + 
+          												"\nLocation: " + d.locations +
+          												"\nUsers: " + d.authors;});
 	}
 }
 
-function clickDot(d, i){
-	CYP.popup.close();
-	//console.log("TODO: Render response");
-
-
-	var tmpl = $("#users-actions-template").tmpl({uid: "aid", mod: "modtemp" , ban : "bantemp", del:"deltemp", edit:"edit1", email:"email1"});
-  	//CYP.popup.show("tmpl");	
+function mouseoverDot(d, i){
+	var circle = d3.select(this)
+	circle.attr("r", 10);
+	circle.attr("fill", d3.rgb(255, 0, 0))
 }
+
+function mouseoutDot(d, i){
+	var circle = d3.select(this)
+	circle.attr("r", 8);
+	circle.attr("fill", d3.rgb(0, 0, 0))
+}
+
+var popup = new Blurb({
+    cssClass: "popup-blurb",
+    position: "center-center",          
+    displayDuration: -1,
+    wrap: true
+});
+
+function isEmpty(obj) {
+    for(var prop in obj) {
+        if(obj.hasOwnProperty(prop))
+            return false;
+    }
+
+    return true;
+}
+
+function clickDot(d, i){
+	//console.log(d.keywords);
+	console.log(d.authors);
+	//console.log(d.namedEntities);
+	//console.log(d.locations);
+	//var keyw= d.keywords.split(",");
+	if (isEmpty(d.locations)){
+		loca = "None";
+	}
+	else{
+	loca= d.locations[0][0];
+	}
+
+	if (isEmpty(d.namedEntities)){
+		ent = " ";
+	}
+	else{
+	ent = d.namedEntities[0][0];
+	}
+
+
+	var tmpl = $("#users-actions-edit-template").tmpl({	keyword1: d.keywords[0][0],
+								keyword2: d.keywords[1][0],
+								keyword3: d.keywords[2][0],
+								keyword4: d.keywords[3][0],
+								keyword5: d.keywords[4][0],
+								keyword6: d.keywords[5][0],
+								keyword7: d.keywords[6][0],
+								keyword8: d.keywords[7][0],
+								keyword9: d.keywords[8][0],
+								keywordNUM1: d.keywords[0][1],
+								keywordNUM2: d.keywords[1][1],
+								keywordNUM3: d.keywords[2][1],
+								keywordNUM4: d.keywords[3][1],
+								keywordNUM5: d.keywords[4][1],
+								keywordNUM6: d.keywords[5][1],
+								keywordNUM7: d.keywords[6][1],
+								keywordNUM8: d.keywords[7][1],
+								keywordNUM9: d.keywords[8][1],
+												 
+								authors:d.authors, 
+
+								namedEntities:ent, 
+								locations:loca});
+	popup.show(tmpl)
+}
+
+$('#close-btn').live("click", function(){popup.close();});
+
 </script>
+
+
 {% end %}
 
-
 {% block jquery_templates %}
-<script id="users-actions-template" type="text/x-jquery-tmpl">
-		<div class="container clearfix" style=" width:360px;">	
-			<div class="actions">
-		<a uid="${uid}" id="moderator-usr-btn" class="button" style="float:left; position:relative;">${mod}</a> 
-		<a uid="${uid}" id="ban-usr-btn" class="button" style="float:left;  position:relative; left:10px;">${ban}</a> 
-		<a uid="${uid}" id="delete-usr-btn" class="button" style="float:left;  position:relative; left:20px;">${del}</a> 
-		<a uid="${uid}" eid="${edit}" email="${email}" id="edit-usr-btn" class="button" style="float:left;  position:relative; left:30px;">Edit</a>
+<script id="users-actions-edit-template" type="text/x-jquery-tmpl">
 
-		<br> <br>	<p>
-				<a class="close-pop-up-btn"style="float:right; position:relative;  cursor: pointer;">Close</a>
-				</p>
-			</div>	
-		</div>
+<style type="text/css">
+.HEADER{position:absolute; font-family:'Arial Rounded MT Bold';font-size:20pt; color:#53666d;}
+.TopTweetsA{font-family:'Arial'; font-size:12pt; color:#1f2021;left:83px;position: absolute;}
+.TopTweetsB{font-family:'Arial'; font-size:12pt; color:#53666d;left:83px;position: absolute;}
+.Details{font-family:'Arial'; font-size:13pt; color:black;left:80px;position: absolute;}
+.Keywords{font-family:'Arial'; font-size:13pt; color:black;left:80px;position: absolute; left:670px; }
+.KeywordsNUM{font-family:'Arial'; font-size:16pt; color:#53666d;left:80px;position: absolute; left:620px;}
+.AuthorLIST {margin-top:12px;}
+</style>
+
+<div class="container clearfix" style=" width:940px;">	
+
+<div>
+<div class="HEADER" style="top:60px; left:90px; color:#d4743f" > Top Tweets</div>
+
+    <div id="TopTweets1" class="TopTweetsA" style="top:110px;">
+    &quot;Lorem ipsum dolor sit amet, consectetur adiping
+. <br/> Mauris placerat nibh et lorem suscipit vehicula. &quot;
+    </div>
+
+    <div id="TopTweets2" class="TopTweetsB" style="top:165px;">
+    &quot;Sed et leo eget mauris cursus viverra. Sed
+pellentesque <br/> neque ut nisl aliquam fermentum. &quot;
+    </div>
+
+
+    <div id="TopTweets3" class="TopTweetsA"  style="position: absolute;top:220px; left:80px;">
+    &quot;Pellentesque habitant morbi tristique senectus et<br/> malesuada fames ac turpis egestas.&quot;
+
+    </div>
+
+
+    <div id="TopTweets4"  class="TopTweetsB" style="top:275px;">
+    &quot;Nulla suscipit bibendum elementum. Donec<br/> nulla
+sapien, auctor egestas viverra laoreet.&quot;
+
+    </div>
+
+    <div id="TopTweets5" class="TopTweetsA" style="top:330px;">
+   "Pellentesque vitae urna eros, vel tempus 
+odio.<br/>  Nulla laoreet metus tristique lectus.&quot;
+
+
+    </div>
+
+
+<div class="HEADER" style="top:48px; left:600px; font-size:19pt;"> Top Keywords</div>
+		
+     <div id="Keyword1"  class="Keywords" style="top:93px;"> ${keyword1}</div>
+     <div id="Keyword1NUM"  class="KeywordsNUM" style="top:90px;"> ${keywordNUM1}</div>
+
+
+     <div id="Keyword2"  class="Keywords" style="top:118px;"> ${keyword2}</div>
+     <div id="Keyword2NUM"  class="KeywordsNUM" style="top:115px; "> ${keywordNUM2}</div>
+
+
+     <div id="Keyword3"  class="Keywords" style="top:143px;"> ${keyword3}</div>
+     <div id="Keyword3NUM"  class="KeywordsNUM" style="top:140px;"> ${keywordNUM3}</div>
+
+
+     <div id="Keyword4"  class="Keywords" style="top:168px; "> ${keyword4}</div>
+     <div id="Keyword4NUM"  class="KeywordsNUM" style="top:165px;"> ${keywordNUM4}</div>
+
+     <div id="Keyword5"  class="Keywords" style="top:193px;"> ${keyword5}</div>
+     <div id="Keyword5NUM"  class="KeywordsNUM" style="top:190px;"> ${keywordNUM5}</div>
+
+     <div id="Keyword6"  class="Keywords" style="top:218px;"> ${keyword6}</div>
+     <div id="Keyword6NUM"  class="KeywordsNUM" style="top:215px;"> ${keywordNUM6}</div>
+
+     <div id="Keyword7"  class="Keywords" style="top:243px;"> ${keyword7}</div>
+     <div id="Keyword7NUM"  class="KeywordsNUM" style="top:240px;"> ${keywordNUM7}</div>
+
+     <div id="Keyword8"  class="Keywords" style="top:268px; "> ${keyword8}</div>
+     <div id="Keyword8NUM"  class="KeywordsNUM" style="top:265px;"> ${keywordNUM8}</div>
+
+
+     <div id="Keyword9"  class="Keywords" style="top:293px;"> ${keyword9}</div>
+     <div id="Keyword9NUM"  class="KeywordsNUM" style="top:290px;"> ${keywordNUM9}</div>
+
+
+
+<div class="HEADER" style="top:348px; left:605px; color:black;"> Users
+<br/>
+
+     <div id="one" style="margin-top:-375px; margin-left:265px;">
+
+
+		<input type="image" id="close-btn" style="float:right; " src="/static/imgs/btnClose2.jpg" value="submit"
+border="0" alt="searchbar" //>
+	
+
+
+
+     </div>
+ 
+
+</div>
+<div class="Details" style="position:absolute; top:360px; left:788px;"> 
+   <div>Activists</div>
+   <div class="AuthorLIST">Journalists</div>
+   <div class="AuthorLIST">Government</div>
+   <div class="AuthorLIST">Students</div>
+   <div class="AuthorLIST">Press/Media</div>
+   <div class="AuthorLIST">Public</div>
+</div>
+
+
+<img src="/static/imgs/circle.png" style="float:left; margin-left:540px; margin-top:350px;">
+<div id="UsersNUM" class="HEADER" style="top:450px; left:618px;font-size:29pt;color:black;">98</div>
+
+
+
+<div  class="HEADER" style="top:420px; font-size:16pt; left:185px; ">  Named Entities</div>
+<div id="NameEntities"  class="Details" style="top:451px; left:185px;">  ${namedEntities}</div>
+
+<div  class="HEADER" style="top:520px; font-size:16pt; left:185px; ">  Location:</div>
+<div id="Location"  class="Details" style="top:524px; left:290px;"> ${locations}</div>
+</div>
+</div>
 </script>
 
 {% end %}

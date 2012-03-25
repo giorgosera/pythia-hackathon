@@ -4,8 +4,7 @@
  * @author l </a>
  */
 
-CYP.onPageLoad(function() {
-       
+
     // =============================== Listeners =============================== //
     
     
@@ -23,9 +22,6 @@ CYP.onPageLoad(function() {
     });
     
     
-    // =============================== Initialization code =============================== //
 
-    
-    CYP.navigator.init();
 
-});
+

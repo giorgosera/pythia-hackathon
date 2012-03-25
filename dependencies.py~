@@ -12,7 +12,6 @@ css_deps = ("css", "css",
 js_deps = ("js", "js",
             [
              ("/", ["home.js"]),
-	     ("/timeline",["libs/d3/d3.v2.js"])
-		
+	     ("/timeline",["/libs/d3/d3.v2.js"])		
 	    ])
 

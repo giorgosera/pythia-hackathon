@@ -10,7 +10,7 @@ CYP.onPageLoad(function() {
     
     
     
-    $("#btnSearch").live("click", function() {
+    $("#btnSearch2").live("click", function() {
         var txt = $("#txtSearch").attr("value");
         CYP.post("/timeline", {
             keywords: txt
