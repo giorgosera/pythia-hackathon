@@ -52,7 +52,6 @@ path {
 <body>
 <div id="left-col" class="timeline-column"></div>
 <div id="meta-box" class="meta-column"></div>
-
 <script src="{{static_url('js/libs/d3/d3.v2.js')}}"></script>
 <script>
 var formatDate = d3.time.format('%Y-%m-%d %H:%M:%S');
@@ -228,8 +227,10 @@ function click(d, i){
 function clickDot(d, i){
 	CYP.popup.close();
 	//console.log("TODO: Render response");
-	//var tmpl = $("#users-actions-template").tmpl({uid: "aid", mod: "modtemp" , ban : "bantemp", del:"deltemp", edit:"edit1", email:"email1"});
-  	CYP.popup.show("tmpl");	
+
+
+	var tmpl = $("#users-actions-template").tmpl({uid: "aid", mod: "modtemp" , ban : "bantemp", del:"deltemp", edit:"edit1", email:"email1"});
+  	//CYP.popup.show("tmpl");	
 }
 </script>
 {% end %}
