@@ -293,35 +293,120 @@ function clickDot(d, i){
 	ent = d.namedEntities[0][0];
 	}
 
-	if (typeof d.keywords[5][0] == "undefined")
+
+if (typeof(d.keywords[0]) == "undefined")
 	{
-            key1= " ";
+            key0= " ";
+            num0= " ";
 	}
     	else{
-    	    key1= d.keywords[5][0];
-    	}	
+    	    key0= d.keywords[0][0];
+	    num0= d.keywords[0][1]
+    	}
+
+if (typeof(d.keywords[1]) == "undefined")
+	{
+            key1= " ";
+            num1= " ";
+	}
+    	else{
+    	    key1= d.keywords[1][0];
+	    num1= d.keywords[1][1]
+    	}
 
 
 
 
-	var tmpl = $("#users-actions-edit-template").tmpl({	keyword1: d.keywords[0][0],
-								keyword2: d.keywords[1][0],
-								keyword3: d.keywords[2][0],
-								keyword4: d.keywords[3][0],
-								keyword5: d.keywords[4][0],
-								keyword6: d.keywords[5][0],
-								keyword7: d.keywords[6][0],
-								keyword8: d.keywords[7][0],
-								keyword9: d.keywords[8][0],
-								keywordNUM1: d.keywords[0][1],
-								keywordNUM2: d.keywords[1][1],
-								keywordNUM3: d.keywords[2][1],
-								keywordNUM4: d.keywords[3][1],
-								keywordNUM5: d.keywords[4][1],
-								keywordNUM6: d.keywords[5][1],
-								keywordNUM7: d.keywords[6][1],
-								keywordNUM8: d.keywords[7][1],
-								keywordNUM9: d.keywords[8][1],
+if (typeof(d.keywords[2]) == "undefined")
+	{
+            key2= " ";
+            num2= " ";
+	}
+    	else{
+    	    key2= d.keywords[2][0];
+	    num2= d.keywords[2][1]
+    	}
+
+if (typeof(d.keywords[3]) == "undefined")
+	{
+            key3= " ";
+            num3= " ";
+	}
+    	else{
+    	    key3= d.keywords[3][0];
+	    num3= d.keywords[3][1]
+    	}
+
+	if (typeof(d.keywords[4]) == "undefined")
+	{
+            key4= " ";
+            num4= " ";
+	}
+    	else{
+    	    key4= d.keywords[4][0];
+	    num4= d.keywords[4][1]
+    	}
+
+	if (typeof(d.keywords[5]) == "undefined")
+	{
+            key5= " ";
+            num5= " ";
+	}
+    	else{
+    	    key5= d.keywords[5][0];
+	    num5= d.keywords[5][1]
+    	}
+
+	if (typeof(d.keywords[6]) == "undefined")
+	{
+            key6= " ";
+            num6= " ";
+	}
+    	else{
+    	    key6= d.keywords[6][0];
+	    num6= d.keywords[6][1]
+    	}
+
+	if (typeof(d.keywords[7]) == "undefined")
+	{
+            key7= " ";
+            num7= " ";
+	}
+    	else{
+    	    key7= d.keywords[7][0];
+	    num7= d.keywords[7][1]
+    	}
+	if (typeof(d.keywords[8]) == "undefined")
+	{
+            key8= " ";
+            num8= " ";
+	}
+    	else{
+    	    key8= d.keywords[8][0];
+	    num8= d.keywords[8][1]
+    	}
+
+
+
+
+	var tmpl = $("#users-actions-edit-template").tmpl({	keyword1: key0,
+								keyword2: key1,
+								keyword3: key2,
+								keyword4: key3,
+								keyword5: key4,
+								keyword6: key5,
+								keyword7: key6,
+								keyword8: key7,
+								keyword9: key8,
+								keywordNUM1: num0,
+								keywordNUM2: num1,
+								keywordNUM3: num2,
+								keywordNUM4: num3,
+								keywordNUM5: num4,
+								keywordNUM6: num5,
+								keywordNUM7: num6,
+								keywordNUM8: num7,
+								keywordNUM9: num8,
 								summary1: d.topTweets[0],
 								summary2: d.topTweets[1],
 								summary3: d.topTweets[2],
@@ -357,29 +442,29 @@ $('#close-btn').live("click", function(){popup.close();});
 <div class="container clearfix" style=" width:940px;">	
 
 <div>
-<div class="HEADER" style="top:60px; left:90px; color:#d4743f" > Top Tweets</div>
+<div class="HEADER" style="top:55px; left:90px; color:#d4743f" > Top Tweets</div>
 
-    <div id="TopTweets1" class="TopTweetsA" style="top:110px; OVERFLOW-Y:AUTO; width:420px;">
+    <div id="TopTweets1" class="TopTweetsA" style="top:101px; OVERFLOW-Y:AUTO; width:420px;">
     &quot; ${summary1}  &quot;
     </div>
 
-    <div id="TopTweets2" class="TopTweetsB" style="top:165px;OVERFLOW-Y:AUTO; width:420px;">
+    <div id="TopTweets2" class="TopTweetsB" style="top:161px;OVERFLOW-Y:AUTO; width:420px;">
     &quot; ${summary2} &quot;
     </div>
 
 
-    <div id="TopTweets3" class="TopTweetsA"  style="position: OVERFLOW-Y:AUTO; width:400px; absolute;top:220px; left:80px;">
+    <div id="TopTweets3" class="TopTweetsA"  style="position: OVERFLOW-Y:AUTO; width:400px; absolute;top:218px; left:80px;">
     &quot;${summary3}&quot;
 
     </div>
 
 
-    <div id="TopTweets4"  class="TopTweetsB" style="top:275px;OVERFLOW-Y:AUTO; width:400px;">
+    <div id="TopTweets4"  class="TopTweetsB" style="top:276px;OVERFLOW-Y:AUTO; width:400px;">
     &quot;${summary4}&quot;
 
     </div>
 
-    <div id="TopTweets5" class="TopTweetsA" style="top:330px;OVERFLOW-Y:AUTO; width:400px;">
+    <div id="TopTweets5" class="TopTweetsA" style="top:332px;OVERFLOW-Y:AUTO; width:400px;">
    &quot;${summary5}&quot;
 
 
